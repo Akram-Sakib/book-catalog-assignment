@@ -4,11 +4,17 @@ import SignIn from "../pages/SignIn/SignIn";
 import SignUp from "../pages/SignUp/SignUp";
 import Layout from "../components/Layout/Layout";
 import AddNewBook from "../pages/AddNewBook/AddNewBook";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import PublicRoute from "../components/PublicRoute/PublicRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <PrivateRoute>
+        <Layout />
+      </PrivateRoute>
+    ),
     errorElement: <div>Not found!</div>,
     children: [
       {
@@ -23,11 +29,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/sign-in",
-    element: <SignIn />,
+    element: (
+      <PublicRoute>
+        <SignIn />
+      </PublicRoute>
+    ),
   },
   {
     path: "/sign-up",
-    element: <SignUp />,
+    element: (
+      <PublicRoute>
+        <SignUp />
+      </PublicRoute>
+    ),
   },
 ]);
 

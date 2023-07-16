@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthRegisterMutation } from "../../redux/features/auth/authApi";
 import { useState } from "react";
 
@@ -10,11 +10,18 @@ const SignUp = () => {
 
   const [register] = useAuthRegisterMutation();
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    await register({ name, email, password, role: "user" });
+    try {
+      await register({ name, email, password, role: "user" });
+      navigate("/sign-in");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

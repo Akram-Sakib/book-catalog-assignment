@@ -4,3 +4,4 @@ export type IAuth = {
   password: string;
   role: string;
 };
+

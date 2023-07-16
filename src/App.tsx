@@ -1,14 +1,15 @@
-import { Provider } from "react-redux";
-import router from "./routes/routes";
 import { RouterProvider } from "react-router-dom";
-import { store } from "./redux/app/store";
+import useAuthCheck from "./hooks/useAuthCheck";
+import router from "./routes/routes";
 
 function App() {
-  return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  );
+  const authCheck = useAuthCheck();
+
+  if (!authCheck) {
+    return <div>Loading...</div>;
+  }
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

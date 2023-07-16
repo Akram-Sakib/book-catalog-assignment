@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/features/hooks";
+import { userLoggedOut } from "../../redux/features/auth/authSlice";
 
 const Navbar = () => {
+  const { accessToken } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const handleSignOut = () => {
+    localStorage.removeItem("auth");
+    dispatch(userLoggedOut());
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -22,10 +31,11 @@ const Navbar = () => {
             <Link to={"/add-new-book"}>Add New Book</Link>
           </li>
           <li>
-            <Link to={"/sign-in"}>Sign In</Link>
-          </li>
-          <li>
-            <Link to={"/sign-up"}>Sign Up</Link>
+            {!accessToken ? (
+              <Link to={"/sign-in"}>Sign In</Link>
+            ) : (
+              <button onClick={handleSignOut}>Sign Out</button>
+            )}
           </li>
         </ul>
       </div>
