@@ -1,6 +1,22 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link } from "react-router-dom";
+import { useAuthRegisterMutation } from "../../redux/features/auth/authApi";
+import { useState } from "react";
 
 const SignUp = () => {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const [register] = useAuthRegisterMutation();
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    await register({ name, email, password, role: "user" });
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -15,7 +31,7 @@ const SignUp = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="name"
@@ -29,6 +45,8 @@ const SignUp = () => {
                 name="name"
                 type="text"
                 autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -47,6 +65,8 @@ const SignUp = () => {
                 name="email"
                 type="email"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -68,6 +88,8 @@ const SignUp = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -85,7 +107,7 @@ const SignUp = () => {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Already have an account?{" "}
+          Already have an account?
           <Link
             to={"/sign-in"}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
