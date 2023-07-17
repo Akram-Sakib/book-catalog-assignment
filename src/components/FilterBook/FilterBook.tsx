@@ -24,6 +24,12 @@ const FilterBook = () => {
           Fiction
         </button>
         <button
+          onClick={() => handleFilter("novel")}
+          className={`btn ${filter === "novel" ? "btn-active" : ""}`}
+        >
+          Novel
+        </button>
+        <button
           onClick={() => handleFilter("historical")}
           className={`btn ${filter === "historical" ? "btn-active" : ""}`}
         >

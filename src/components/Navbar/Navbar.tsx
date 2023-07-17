@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/features/hooks";
 import { userLoggedOut } from "../../redux/features/auth/authSlice";
+import SearchInput from "../SearchInput/SearchInput";
 
 const Navbar = () => {
   const { accessToken } = useAppSelector((state) => state.auth);
@@ -21,11 +22,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">
           {" "}
           <div className="form-control">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-24 md:w-auto"
-            />
+            <SearchInput />
           </div>
           <li>
             <Link to={"/add-new-book"}>Add New Book</Link>

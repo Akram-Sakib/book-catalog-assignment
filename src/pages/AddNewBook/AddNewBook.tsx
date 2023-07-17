@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useAddBookMutation } from "../../redux/features/book/bookApi";
 import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddNewBook = () => {
   const [title, setTitle] = useState<string>("");
@@ -11,6 +13,8 @@ const AddNewBook = () => {
   const [publicationDate, setPublicationDate] = useState<string>("");
   const [reviews, setReviews] = useState<number>(0);
 
+  const navigate = useNavigate();
+
   const [addBook] = useAddBookMutation();
 
   const handleSubmit = async (
@@ -18,14 +22,21 @@ const AddNewBook = () => {
   ): Promise<void> => {
     e.preventDefault();
 
-    await addBook({
-      title,
-      author,
-      image,
-      genre,
-      publicationDate,
-      reviews,
-    });
+    try {
+      await addBook({
+        title,
+        author,
+        image,
+        genre,
+        publicationDate,
+        reviews,
+      }).unwrap();
+
+      toast.success("Successfully Book Added!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
   };
 
   return (
@@ -120,10 +131,11 @@ const AddNewBook = () => {
                 }
               >
                 <option disabled selected>
-                  Mystery
+                  Select
                 </option>
                 <option>Fiction</option>
                 <option>Historical</option>
+                <option>Novel</option>
               </select>
             </div>
           </div>
@@ -171,7 +183,6 @@ const AddNewBook = () => {
               />
             </div>
           </div>
-
           <div>
             <button
               type="submit"

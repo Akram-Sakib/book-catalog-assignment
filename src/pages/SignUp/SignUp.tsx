@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthRegisterMutation } from "../../redux/features/auth/authApi";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [name, setName] = useState<string>("");
@@ -19,8 +20,11 @@ const SignUp = () => {
     try {
       await register({ name, email, password, role: "user" });
       navigate("/sign-in");
+      toast.success("Account created successfully! Please login.");
     } catch (error) {
-      console.log(error);
+      toast.error(
+        "Something went wrong while creating your account. Please try again later."
+      );
     }
   };
 

@@ -2,15 +2,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthLoginMutation } from "../../redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const [login] = useAuthLoginMutation();
-  const navigate = useNavigate();
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -23,9 +23,8 @@ const SignIn = () => {
       (loggedIn as any).data && localStorage.setItem("auth", authData);
 
       window.location.href = "/";
-      // navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Wrong email or password. Please try again.");
     }
   };
 

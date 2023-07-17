@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export type Filter = "all" | "fiction" | "historical";
+export type Filter = "all" | "fiction" | "novel" | "historical";
 
 type IInitialState = {
   filter: Filter;
@@ -19,9 +19,12 @@ const filterSlice = createSlice({
     filterChanged: (state, action: PayloadAction<Filter>) => {
       state.filter = action.payload;
     },
+    searchTermChanged: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
-export const { filterChanged } = filterSlice.actions;
+export const { filterChanged, searchTermChanged } = filterSlice.actions;
 
 export default filterSlice.reducer;

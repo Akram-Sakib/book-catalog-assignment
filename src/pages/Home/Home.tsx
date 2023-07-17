@@ -4,8 +4,8 @@ import { useGetBooksQuery } from "../../redux/features/book/bookApi";
 import { useAppSelector } from "../../redux/features/hooks";
 
 const Home = () => {
-  const { data, isLoading, isError } = useGetBooksQuery();
-  const { filter } = useAppSelector((state) => state.filter);
+  const { filter, searchTerm } = useAppSelector((state) => state.filter);
+  const { data, isLoading, isError } = useGetBooksQuery(searchTerm);
   let content = null;
 
   if (isLoading) {
@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div className="flex flex-col gap-x-5 justify-between">
       <FilterBook />
-      <div className="flex gap-x-5 justify-between">{content}</div>
+      <div className="grid grid-cols-3 gap-5">{content}</div>
     </div>
   );
 };

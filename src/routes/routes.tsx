@@ -6,6 +6,8 @@ import Layout from "../components/Layout/Layout";
 import AddNewBook from "../pages/AddNewBook/AddNewBook";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import PublicRoute from "../components/PublicRoute/PublicRoute";
+import BookDetails from "../pages/BookDetails/BookDetails";
+import EditBook from "../pages/EditBook/EditBookForm";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/books/:bookId",
+        element: <BookDetails />,
+      },
+      {
+        path: "/edit-book/:bookId",
+        element: <EditBook />,
       },
       {
         path: "/add-new-book",
